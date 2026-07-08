@@ -6,4 +6,4 @@ RUN apt install -y nginx
 
 EXPOSE 8000
 
-CMD nginx
+CMD ["nginx", "-g", "daemon off;"]
