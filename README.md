@@ -16,10 +16,6 @@ Connect to the virtual machine via SSH on port 4242.
 
 ## Resources  
 Youtube : 
-*  Introduction Script Bash sur Linux <https://www.youtube.com/watch?v=gBCGeLjYBgQ&list=PLSuzYIVSEUT45ogJPAzxDsDSzFbYlKzJY&index=1>  
-*  Script Bash - Maitrisez les conditions If, Else, Elif <https://www.youtube.com/watch?v=5nIz75sGq3A&list=PLSuzYIVSEUT45ogJPAzxDsDSzFbYlKzJY&index=2>  
-*  Script Bash - Maitrisez les boucles For <https://www.youtube.com/watch?v=k-0uhLVI11M&list=PLSuzYIVSEUT45ogJPAzxDsDSzFbYlKzJY&index=3>  
-*  Script Bash - Maitrisez les boucles While <https://www.youtube.com/watch?v=AJpe9VV9utQ&list=PLSuzYIVSEUT45ogJPAzxDsDSzFbYlKzJY&index=4>  
 
 IA : chatGPT  
 
