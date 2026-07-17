@@ -2,7 +2,7 @@ name: inception
 
 services:
 
-  inception-nginx:
+  nginx:
     image: 42-nginx
     volumes:
       - type: volume
