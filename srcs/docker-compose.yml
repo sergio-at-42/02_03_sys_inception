@@ -6,7 +6,7 @@ services:
     image: 42-nginx
     volumes:
       - type: volume
-        source: db-wp
+        source: wp-data
         target: /data
     networks:
       - web-net
