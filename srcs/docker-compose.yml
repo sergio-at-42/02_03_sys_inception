@@ -1,5 +1,13 @@
 name: inception
 
+networks:
+  web-net:
+  intra-ney:
+
+volumes:
+  wp-data:
+  db-data:
+
 services:
 
   inception-nginx:
@@ -21,10 +29,3 @@ services:
       context: backend
       target: builder
 
-networks:
-  web-net:
-  intra-ney:
-
-volumes:
-  wp-data:
-  db-data:
