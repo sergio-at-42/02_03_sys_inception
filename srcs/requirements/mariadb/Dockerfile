@@ -2,8 +2,8 @@ FROM debian
 
 RUN apt update && apt full-upgrade -y
 
-RUN apt install -y mariadb-server mariadb-client galera-4
+RUN apt install -y mariadb-server
 
 EXPOSE 3306
 
-CMD ["bash"]
+CMD ["mariadbd"]

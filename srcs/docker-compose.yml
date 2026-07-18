@@ -16,10 +16,14 @@ services:
 #    depends_on:
 #      - backend
 
-  # backend:
-  #   build:
-  #     context: backend
-  #     target: builder
+  mariadb:
+    image: 42-mariadb
+    volumes:
+      - type: volume
+        source: db-data
+        target: /data
+    networks:
+      - intra-net
 
 networks:
   web-net:
