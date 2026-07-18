@@ -25,25 +25,11 @@ services:
     networks:
       - intra-net
 
-
 networks:
   web-net:
   intra-net:
 
-
 volumes:
-
   wp-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/sbeldjao/data/wp-data
-
   db-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/sbeldjao/data/db-data
-
+   
