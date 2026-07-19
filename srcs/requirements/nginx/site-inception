@@ -13,8 +13,8 @@
 # Inception server configuration
 #
 server {
-	listen 8000 inception_server;
-	listen [::]:8000 inception_server;
+	listen 8000;
+	listen [::]:8000;
 
 	# SSL configuration
 	#
