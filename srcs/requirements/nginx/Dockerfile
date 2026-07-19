@@ -6,7 +6,7 @@ RUN apt install -y nginx
 
 COPY ./site-inception /etc/nginx/sites-available/site-inception
 
-RUN ln -s /etc/nginx/sites-available/site-inception /etc/nginx/sites-available/site-enabled/site-inception
+RUN ln -s /etc/nginx/sites-available/site-inception /etc/nginx/site-enabled/site-inception
 
 RUN rm /etc/nginx/sites-available/site-enabled/default
 
