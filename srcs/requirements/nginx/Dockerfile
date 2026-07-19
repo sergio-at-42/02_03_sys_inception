@@ -8,7 +8,7 @@ COPY ./site-inception /etc/nginx/sites-available/site-inception
 
 RUN ln -s /etc/nginx/sites-available/site-inception /etc/nginx/sites-enabled/site-inception
 
-RUN rm /etc/nginx/sites-available/site-enabled/default
+RUN rm /etc/nginx/sites-enabled/default
 
 EXPOSE 8000
 
