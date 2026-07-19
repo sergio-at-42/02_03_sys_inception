@@ -7,12 +7,12 @@ services:
     volumes:
       - type: volume
         source: wp-data
-        target: /www
+        target: /data
     networks:
       - web-net
       - intra-net
     ports:
-      - 8000:80
+      - 8000:8000
 #    depends_on:
 #      - backend
 
@@ -30,7 +30,7 @@ services:
     volumes:
       - type: volume
         source: wp-data
-        target: /www
+        target: /data
     networks:
       - intra-net
 

@@ -4,6 +4,12 @@ RUN apt update && apt full-upgrade -y
 
 RUN apt install -y nginx
 
+COPY ./site-inception /etc/nginx/sites-available/
+
+RUN ln -s /etc/nginx/sites-available/site-inception /etc/nginx/sites-available/site-enabled/site-inception
+
+RUN rm /etc/nginx/sites-available/site-enabled/default
+
 EXPOSE 8000
 
 CMD ["nginx", "-g", "daemon off;"]
