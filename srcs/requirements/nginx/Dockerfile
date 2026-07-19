@@ -4,7 +4,7 @@ RUN apt update && apt full-upgrade -y
 
 RUN apt install -y nginx
 
-COPY ./site-inception /etc/nginx/sites-available/
+COPY ./site-inception /etc/nginx/sites-available/site-inception
 
 RUN ln -s /etc/nginx/sites-available/site-inception /etc/nginx/sites-available/site-enabled/site-inception
 
