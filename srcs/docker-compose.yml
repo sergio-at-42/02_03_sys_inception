@@ -50,9 +50,11 @@ networks:
 
 volumes:
   wp_data:
-    device: /home/sbeldjao/data/wp_data
+    driver_opts:
+      device: /home/sbeldjao/data/wp_data
   db_data:
-    device: /home/sbeldjao/data/db_data
+    driver_opts:
+      device: /home/sbeldjao/data/db_data
 
 secrets:
   db_password:
