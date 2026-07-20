@@ -13,17 +13,8 @@ services:
       - intra-net
     ports:
       - 8000:8000
-#    depends_on:
-#      - backend
-
-  mariadb:
-    image: 42-mariadb
-    volumes:
-      - type: volume
-        source: db-data
-        target: /data
-    networks:
-      - intra-net
+    depends_on:
+      - wp-php
 
   wp-php:
     image: 42-wp-php
@@ -33,6 +24,25 @@ services:
         target: /data
     networks:
       - intra-net
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: 42-mariadb
+    volumes:
+      - type: volume
+        source: db-data
+        target: /data
+    networks:
+      - intra-net
+    environment:
+       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+       MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      #  MYSQL_DATABASE: wordpress
+      #  MYSQL_USER: wordpress
+    secrets:
+      - db_password
+      - db_root_password
 
 networks:
   web-net:
@@ -41,4 +51,9 @@ networks:
 volumes:
   wp-data:
   db-data:
-   
+
+secrets:
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
