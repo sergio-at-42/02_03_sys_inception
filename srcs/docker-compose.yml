@@ -6,11 +6,11 @@ services:
     image: 42-nginx
     volumes:
       - type: volume
-        source: wp-data
+        source: wp_data
         target: /data
     networks:
-      - web-net
-      - intra-net
+      - web_net
+      - intra_net
     ports:
       - 8000:8000
     depends_on:
@@ -20,10 +20,10 @@ services:
     image: 42-wp-php
     volumes:
       - type: volume
-        source: wp-data
+        source: wp_data
         target: /data
     networks:
-      - intra-net
+      - intra_net
     depends_on:
       - mariadb
 
@@ -31,10 +31,10 @@ services:
     image: 42-mariadb
     volumes:
       - type: volume
-        source: db-data
+        source: db_data
         target: /data
     networks:
-      - intra-net
+      - intra_net
     environment:
        MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
        MYSQL_PASSWORD_FILE: /run/secrets/db_password
@@ -45,12 +45,14 @@ services:
       - db_root_password
 
 networks:
-  web-net:
-  intra-net:
+  web_net:
+  intra_net:
 
 volumes:
-  wp-data:
-  db-data:
+  wp_data:
+    device: /home/sbeldjao/data/wp_data
+  db_data:
+    device: /home/sbeldjao/data/db_data
 
 secrets:
   db_password:
