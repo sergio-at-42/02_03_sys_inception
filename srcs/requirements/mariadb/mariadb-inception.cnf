@@ -1,0 +1,6 @@
+[server]
+datadir = /data
+socket  = /run/mysqld/mysqld.sock
+port = 3306
+bind_address = *
+user = wp-user
