@@ -4,7 +4,9 @@ RUN apt update && apt full-upgrade -y
 
 RUN apt install -y mariadb-server
 
-COPY ./mariadb-inception.cnf /etc/mysql/mariadb.conf.d/mariadb-inception.cnf
+RUN chown -R mysql:mysql /var/lib/mysql
+
+# COPY ./mariadb-inception.cnf /etc/mysql/mariadb.conf.d/mariadb-inception.cnf
 
 EXPOSE 3306
 
