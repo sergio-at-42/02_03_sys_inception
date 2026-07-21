@@ -6,3 +6,7 @@ services:
       - intra_net
     ports:
       - 8888:80
+
+networks:
+  web_net:
+  intra_net:
