@@ -1,0 +1,8 @@
+services:
+  phpmyadmin:
+    image: phpmyadmin
+    networks:
+      - web_net
+      - intra_net
+    ports:
+      - 8080:8080
