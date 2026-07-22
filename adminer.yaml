@@ -1,13 +1,11 @@
 services:
   phpmyadmin:
-    image: amd64/phpmyadmin
+    image: adminer
     networks:
       - web_net
       - intra_net
     ports:
-      - 8888:80
-    environment:
-      - PMA_ARBITRARY=1
+      - 8080:8080
 
 networks:
   web_net:
