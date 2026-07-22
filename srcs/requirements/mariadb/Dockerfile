@@ -8,7 +8,7 @@ RUN chown -R mysql:mysql /var/lib/mysql
 
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
-RUN mariadb << EOF \
+RUN mariadb <<EOF \
 ALTER USER 'root'@'localhost' \
 IDENTIFIED BY '42'; \
 EOF
