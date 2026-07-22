@@ -8,10 +8,7 @@ RUN chown -R mysql:mysql /var/lib/mysql
 
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
-RUN mariadb <<EOF \
-ALTER USER 'root'@'localhost' \
-IDENTIFIED BY '42'; \
-EOF
+RUN mariadb ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
 
 # COPY ./mariadb-inception.cnf /etc/mysql/mariadb.conf.d/mariadb-inception.cnf
 
