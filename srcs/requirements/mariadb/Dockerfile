@@ -14,8 +14,8 @@ EXPOSE 3306
 
 USER mysql
 
-RUN mariadb <<EOF
-ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
-EOF
+# RUN mariadb <<EOF
+# ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
+# EOF
 
 CMD ["mariadbd"]
