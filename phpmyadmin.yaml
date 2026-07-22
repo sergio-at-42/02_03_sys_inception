@@ -1,6 +1,6 @@
 services:
   phpmyadmin:
-    image: phpmyadmin
+    image: amd64/phpmyadmin
     networks:
       - web_net
       - intra_net

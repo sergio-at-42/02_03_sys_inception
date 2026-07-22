@@ -6,7 +6,7 @@ RUN apt install -y mariadb-server
 
 RUN chown -R mysql:mysql /var/lib/mysql
 
-RUN mkdir /run/mysqld && chown -R mysql:mysql /run/mysqld
+RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 # COPY ./mariadb-inception.cnf /etc/mysql/mariadb.conf.d/mariadb-inception.cnf
 
