@@ -2,8 +2,10 @@ name: inception
 
 services:
 
-  nginx:
+  42-nginx:
+    build: requirements/nginx
     image: 42-nginx
+    pull_policy: build
     volumes:
       - type: volume
         source: wp_data
@@ -17,8 +19,10 @@ services:
     depends_on:
       - wp-php
 
-  wp-php:
-    image: 42-wp-php
+  42-wordpress:
+    build: requirements/wordpress
+    image: 42-wordpress
+    pull_policy: build
     volumes:
       - type: volume
         source: wp_data
@@ -29,8 +33,10 @@ services:
     depends_on:
       - mariadb
 
-  mariadb:
+  42-mariadb:
+    build: requirements/wordpress
     image: 42-mariadb
+    pull_policy: build
     volumes:
       - type: volume
         source: db_data
