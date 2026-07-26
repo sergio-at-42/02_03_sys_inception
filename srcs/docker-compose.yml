@@ -34,7 +34,7 @@ services:
       - 42-mariadb
 
   42-mariadb:
-    build: requirements/wordpress
+    build: requirements/mariadb
     image: 42-mariadb
     pull_policy: build
     volumes:
