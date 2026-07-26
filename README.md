@@ -62,14 +62,6 @@ sshd_config *fichier de configuration par défaut*
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config.d/sshd_config_vm42.conf    *créer un fichier de configuration personalisée, qui sera chargé automatiquement*  
 nano /etc/ssh/sshd_config.d/sshd_config_vm42.conf  
 
-ssh-keygen -t ed25519 -C "@mail"                *générer un couple clé publique/privée*  
-eval "$(ssh-agent -s)"                          *démarrer l'agent SSH en arrière plan*  
-ssh-add ~/.ssh/id_ed25519                       *ajouter une clé SSH à ssh-agent*  
-mkdir -p ~/.ssh                                 *créer le répertoire SSH de l'utilisateur*  
-chmod 700 ~/.ssh                                *donner tous les droits sur le répertoire SSH uniquement à l'utilisateur*  
-cat id_ed25519.pub >> ~/.ssh/authorized_keys    *copier une clé publique dans le fichier* **authorized_keys**  
-chmod 600 ~/.ssh/authorized_keys                *donner les droits RW sur le fichier* **authorized_keys** *uniquement à l'utilisateur*  
-
 ```bash
 Port 4242
 PermitRootLogin no
@@ -82,6 +74,14 @@ ChallengeResponseAuthentication no
 UsePAM yes
 ```
 systemctl restart ssh  
+
+ssh-keygen -t ed25519 -C "@mail"                *générer un couple clé publique/privée*  
+eval "$(ssh-agent -s)"                          *démarrer l'agent SSH en arrière plan*  
+ssh-add ~/.ssh/id_ed25519                       *ajouter une clé SSH à ssh-agent*  
+mkdir -p ~/.ssh                                 *créer le répertoire SSH de l'utilisateur*  
+chmod 700 ~/.ssh                                *donner tous les droits sur le répertoire SSH uniquement à l'utilisateur*  
+cat id_ed25519.pub >> ~/.ssh/authorized_keys    *copier une clé publique dans le fichier* **authorized_keys**  
+chmod 600 ~/.ssh/authorized_keys                *donner les droits RW sur le fichier* **authorized_keys** *uniquement à l'utilisateur*  
 
 ### Hostname   
 hostnamectl *ou* hostname               *Afficher le hotsname actuel*  
