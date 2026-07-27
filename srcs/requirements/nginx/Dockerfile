@@ -20,6 +20,6 @@ RUN ln -s /etc/nginx/sites-available/site-inception /etc/nginx/sites-enabled/sit
 
 RUN rm /etc/nginx/sites-enabled/default
 
-EXPOSE 8000
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
