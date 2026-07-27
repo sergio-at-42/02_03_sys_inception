@@ -599,3 +599,23 @@ pm.max_spare_servers = 3
 ;php_admin_flag[log_errors] = on
 ;php_admin_value[memory_limit] = 32M
 ```
+
+## Générer la clé privée et le certificat
+```
+openssl req \
+    -x509 \
+    -nodes \
+    -days 365 \
+    -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/inception.key \
+    -out /etc/nginx/ssl/inception.crt \
+    -subj "/C=FR/ST=Bouches-du-Rhone/L=Marseille/O=42/OU=Inception/CN=localhost"
+```
+-req : crée une demande de certificat (CSR).
+-x509 : génère directement un certificat auto-signé.
+-nodes : ne chiffre pas la clé privée (Nginx pourra la lire sans mot de passe).
+-days 365 : certificat valide pendant 365 jours.
+-newkey rsa:2048 : crée une nouvelle clé RSA de 2048 bits.
+-keyout : fichier de la clé privée.
+-out : fichier du certificat.
+-subj : renseigne automatiquement les informations du certificat (évite les questions interactives).
