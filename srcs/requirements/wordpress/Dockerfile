@@ -6,15 +6,8 @@ RUN apt install -y php-fpm php-mysql php-cli
 
 COPY ./php-fpm-inception /etc/php/8.2/fpm/pool.d/www.conf
 
-ADD --unpack=true https://wordpress.org/latest.tar.gz /temp
-
-RUN --mount=type=bind,\
-    destination=~/data/wp_data,\
-    source=/data,\
-    readwrite \
-    cp -R /temp/wordpress/* /data
+ADD --unpack=true https://wordpress.org/latest.tar.gz /
 
 EXPOSE 9000
 
-VOLUME /data
 CMD ["php-fpm8.2", "-F"]
