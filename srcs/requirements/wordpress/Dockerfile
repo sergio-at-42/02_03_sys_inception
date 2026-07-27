@@ -8,7 +8,11 @@ COPY ./php-fpm-inception /etc/php/8.2/fpm/pool.d/www.conf
 
 ADD --unpack=true https://wordpress.org/latest.tar.gz /temp
 
-RUN cp -R /temp/wordpress/* /data
+RUN --mount=type=bind,\
+    destination=~/data/wp_data,\
+    source=/data,\
+    readwrite \
+    cp -R /temp/wordpress/* /data
 
 EXPOSE 9000
 
