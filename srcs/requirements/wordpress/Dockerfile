@@ -10,4 +10,4 @@ ADD --unpack=true https://wordpress.org/latest.tar.gz /
 
 EXPOSE 9000
 
-CMD ["php-fpm8.2", "-F"]
+ENTRYPOINT ["php-fpm8.2", "-F"]
