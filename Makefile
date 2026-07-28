@@ -6,7 +6,7 @@
 #    By: sbeldjao <serge.beldjaoui@learner.42.te    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/07/29 00:43:38 by sbeldjao         ###   ########.fr        #
+#    Updated: 2026/07/29 00:45:43 by sbeldjao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ clean :
 	sudo docker rm $$(sudo docker ps -qa)
 	sudo docker rmi -f $$(sudo docker images -qa)
 	sudo docker volume rm $$(sudo docker volume ls -q)
-	sudo docker network rm $$(sudo docker network ls -q) 2>/dev/null
+	sudo docker network rm $$(sudo docker network ls -q)
 
 fclean : clean
 	rm -rf $(DATA_DIR)
