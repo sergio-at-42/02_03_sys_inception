@@ -6,7 +6,7 @@
 #    By: sbeldjao <serge.beldjaoui@learner.42.te    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/07/29 00:15:57 by sbeldjao         ###   ########.fr        #
+#    Updated: 2026/07/29 00:23:37 by sbeldjao         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ DATA_DIR = /home/sbeldjao/data
 all : 
 	mkdir -p $(DATA_DIR)/wp_data
 	mkdir -p $(DATA_DIR)/db_data
-	docker compose -f ./srcs/docker-compose.yml
+	docker compose -f ./srcs/docker-compose.yml up
 
 clean : 
 	docker stop $(docker ps -qa)
