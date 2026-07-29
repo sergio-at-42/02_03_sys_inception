@@ -12,7 +12,7 @@ RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 EXPOSE 3306
 
-# USER mysql
+USER mysql
 
 # RUN mariadb <<EOF
 # CREATE DATABASE wp-db-inception;
@@ -26,4 +26,4 @@ EXPOSE 3306
 # ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
 # EOF
 
-ENTRYPOINT ["bash", "mariadb-inception-init.sh"]
+ENTRYPOINT ["bash", "./requirements/mariadb-inception-init.sh"]
