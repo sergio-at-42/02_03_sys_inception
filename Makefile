@@ -6,7 +6,7 @@
 #    By: Serge <serge.beldjaoui@learner.42.tech>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/07/29 18:03:20 by Serge            ###   ########.fr        #
+#    Updated: 2026/07/29 18:51:32 by Serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,10 @@ clean :
 	sudo docker volume ls -q | xargs --no-run-if-empty sudo docker volume rm
 	sudo docker network ls -q | xargs --no-run-if-empty sudo docker network rm -f
 
-fclean : 
+clean-data:
 	sudo rm -rf $(DATA_DIR)
-	clean
+
+fclean : clean-data clean
 
 re : fclean all
 
-
-
-curl -L https://wordpress.org/latest.tar.gz | tar -xz --strip-components=1 -C $(DATA_DIR)/wp_data
