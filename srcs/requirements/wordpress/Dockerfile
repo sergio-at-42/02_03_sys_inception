@@ -6,7 +6,9 @@ RUN apt install -y php-fpm php-mysql php-cli
 
 COPY ./php-fpm-inception /etc/php/8.2/fpm/pool.d/www.conf
 
-# ADD --unpack=true https://wordpress.org/latest.tar.gz /
+ADD --unpack=true https://wordpress.org/latest.tar.gz /
+
+COPY ./wp-config.php /wordpress
 
 EXPOSE 9000
 
