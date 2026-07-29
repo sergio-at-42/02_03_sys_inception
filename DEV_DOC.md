@@ -619,3 +619,18 @@ openssl req \
 -keyout : fichier de la clé privée.
 -out : fichier du certificat.
 -subj : renseigne automatiquement les informations du certificat (évite les questions interactives).
+
+
+
+
+## Commande Mariadb
+| Action                               | Commande                                    |
+| ------------------------------------ | ------------------------------------------- |
+| Lister les bases                     | `SHOW DATABASES;`                           |
+| Sélectionner une base                | `USE nom_base;`                             |
+| Lister les tables                    | `SHOW TABLES;`                              |
+| Décrire une table                    | `DESCRIBE nom_table;`                       |
+| Lister les utilisateurs              | `SELECT User, Host FROM mysql.global_priv;` |
+| Voir les privilèges d'un utilisateur | `SHOW GRANTS FOR 'user'@'host';`            |
+| Voir l'utilisateur courant           | `SELECT CURRENT_USER();`                    |
+| Voir la base courante                | `SELECT DATABASE();`                        |

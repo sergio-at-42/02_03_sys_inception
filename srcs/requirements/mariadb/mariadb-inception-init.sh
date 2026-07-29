@@ -1,9 +1,8 @@
-mariadb <<EOF
-CREATE DATABASE "wp-db-inception";
-CREATE USER "wp-user"@"42-mariadb" IDENTIFIED BY "wp-pass";
-GRANT ALL PRIVILEGES ON wp-db-inception.* TO "wp-user"@"42-mariadb";
+mariadb -u mysql <<EOF
+CREATE DATABASE wp_db_inception";
+CREATE USER "wp_user"@"%" IDENTIFIED BY "wp-pass";
+GRANT ALL PRIVILEGES ON wp_db_inception.* TO "wp_user"@"%";
 FLUSH PRIVILEGES;
-EXIT
 EOF
 
 exec mariadbd -u mysql
