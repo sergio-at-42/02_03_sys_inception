@@ -26,4 +26,4 @@ USER mysql
 # ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
 # EOF
 
-ENTRYPOINT ["bash", "./requirements/mariadb-inception-init.sh"]
+ENTRYPOINT ["bash", "./requirements/mariadb/mariadb-inception-init.sh"]
