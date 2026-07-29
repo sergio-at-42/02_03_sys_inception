@@ -10,6 +10,8 @@ RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 # COPY ./mariadb-inception.cnf /etc/mysql/mariadb.conf.d/mariadb-inception.cnf
 
+COPY ./mariadb-inception-init.sh /
+
 EXPOSE 3306
 
 USER mysql
@@ -26,4 +28,4 @@ USER mysql
 # ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
 # EOF
 
-ENTRYPOINT ["bash", "./requirements/mariadb/mariadb-inception-init.sh"]
+ENTRYPOINT ["bash", "/mariadb-inception-init.sh"]
