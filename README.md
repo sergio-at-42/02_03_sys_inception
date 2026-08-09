@@ -90,6 +90,45 @@ hostnamectl set-hostname new_hostname   *Modifier le hostname*
 ### IP   
 ip address  
 
+sudo apt install resolvconf
+
+sudo ifdown enp0s3  
+sudo ifup enp0s3  
+sudo systemctl restart networking  
+
+nmcli connection show  
+sudo nmcli connection down "Wired connection 1"  
+sudo nmcli connection up "Wired connection 1"  
+
+#### Configuration IP avec IFUPDOWN
+nano /etc/network/interfaces
+```
+# The primary network interface
+allow-hotplug enp0s3
+#iface enp0s3 inet dhcp
+iface enp0s3 inet static
+    address 192.168.100.10
+    netmask 255.255.255.0
+    gateway 192.168.100.1
+    dns-nameservers 1.1.1.1 8.8.8.8
+
+# This is an autoconfigured IPv6 interface
+iface enp0s3 inet6 auto
+```
+#### Configuration IP fixe avec Network Manager
+sudo nmcli connection modify "Wired connection 1" \
+    ipv4.method manual \
+    ipv4.addresses 192.168.100.10/24 \
+    ipv4.gateway 192.168.100.1 \
+    ipv4.dns "192.168.100.1 8.8.8.8"
+
+#### Configuration IP via DHCP
+sudo nmcli connection modify "Wired connection 1" \
+    ipv4.method auto \
+    ipv4.addresses "" \
+    ipv4.gateway "" \
+    ipv4.dns ""
+
 ### Reboot / Shutdown
 reboot  
 shutdown --poweroff
