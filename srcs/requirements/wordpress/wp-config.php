@@ -20,10 +20,10 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'wp-db-inception' );
+define( 'DB_NAME', 'wp_db_inception' );
 
 /** Database username */
-define( 'DB_USER', 'wp-user' );
+define( 'DB_USER', 'wp_user' );
 
 /** Database password */
 define( 'DB_PASSWORD', 'wp-pass' );
@@ -71,7 +71,7 @@ define( 'NONCE_SALT',       'put your unique phrase here' );
  *
  * @link https://developer.wordpress.org/advanced-administration/wordpress/wp-config/#table-prefix
  */
-$table_prefix = 'wp-';
+$table_prefix = 'wp_';
 
 /**
  * For developers: WordPress debugging mode.
