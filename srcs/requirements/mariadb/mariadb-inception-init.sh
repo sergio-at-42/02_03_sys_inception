@@ -26,7 +26,7 @@ GRANT ALL PRIVILEGES ON wp_db_inception.* TO "wp_user"@"%";
 EOF
 
 # Stopping temporary MariaDB
-mariadb-admin -u root shutdown
+mariadb-admin -u mysql shutdown
 
 echo ">>>>>>>>    End of script    <<<<<<<<"
 
