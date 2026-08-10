@@ -2,7 +2,7 @@
 
 echo ">>>>>>>>     Start of Initialisation Wordpress Database script    <<<<<<<<"
 
-# Start MariaDB temporarily
+# Starting MariaDB temporarily
 mariadbd -u mysql &
 
 #Wait 5 secondes for MariaDB starting
@@ -11,22 +11,25 @@ until mariadb-admin ping --silent; do
 done
 
 # Create Wordpress database
-mariadb -u mysql <<EOF
-CREATE DATABASE wp_db_inception;
+mariadb -u root <<EOF
+CREATE DATABASE IF NOT EXISTS wp_db_inception;
 EOF
 # Create Wordpress admin user
-mariadb -u mysql <<EOF
-CREATE USER "toto"@"%" IDENTIFIED BY "wp-admin-pass";
+mariadb -u root <<EOF
+CREATE USER IF NOT EXISTS "toto"@"%" IDENTIFIED BY "wp-admin-pass";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "toto"@"%";
 EOF
 # Create Wordpress user
-mariadb -u mysql <<EOF
-CREATE USER "wp_user"@"%" IDENTIFIED BY "wp-pass";
+mariadb -u root <<EOF
+CREATE USER IF NOT EXISTS "wp_user"@"%" IDENTIFIED BY "wp-pass";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "wp_user"@"%";
 EOF
+
+# Stopping temporary MariaDB
+mariadb-admin -u root shutdown
 
 echo ">>>>>>>>    End of script    <<<<<<<<"
 
 echo ">>>>>>>>    Start of MariaDB Server    <<<<<<<<"
 
-#exec mariadbd -u mysql
+exec mariadbd -u mysql
