@@ -6,7 +6,9 @@ echo ">>>>>>>>     Start of Initialisation Wordpress Database script    <<<<<<<<
 mariadbd -u mysql
 
 #Wait 5 secondes for MariaDB starting
-sleep 5
+until mariadb-admin ping --silent; do
+    sleep 1
+done
 
 # Create Wordpress database
 mariadb -u mysql <<EOF
