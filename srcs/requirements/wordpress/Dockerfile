@@ -2,11 +2,11 @@ FROM debian:bookworm
 
 RUN apt update && apt full-upgrade -y
 
+RUN apt install -y curl
+
 RUN apt install -y php-fpm php-mysql php-cli
 
 COPY ./php-fpm-inception.conf /etc/php/8.2/fpm/pool.d/www.conf
-
-#ADD --unpack=true https://wordpress.org/latest.tar.gz /
 
 COPY ./wp-config.php /wordpress
 
