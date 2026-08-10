@@ -2,7 +2,11 @@
 
 echo ">>>>>>>>     Start of Initialisation Wordpress Database script    <<<<<<<<"
 
+# Start MariaDB temporarily
 mariadbd -u mysql
+
+#Wait 5 secondes for MariaDB starting
+sleep 5
 
 # Create Wordpress database
 mariadb -u mysql <<EOF
