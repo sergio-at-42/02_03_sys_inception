@@ -15,3 +15,4 @@ COPY ./wp-php-inception-init.sh /
 EXPOSE 9000
 
 ENTRYPOINT ["bash", "/wp-php-inception-init.sh"]
+
