@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo ">>>>>>>>     Start of Initialisation Wordpress Database script    <<<<<<<<"
-
 # Starting MariaDB temporarily
 mariadbd -u mysql &
 
@@ -28,8 +26,5 @@ EOF
 # Stopping temporary MariaDB
 mariadb-admin -u mysql shutdown
 
-echo ">>>>>>>>    End of script    <<<<<<<<"
-
-echo ">>>>>>>>    Start of MariaDB Server    <<<<<<<<"
 
 exec mariadbd -u mysql
