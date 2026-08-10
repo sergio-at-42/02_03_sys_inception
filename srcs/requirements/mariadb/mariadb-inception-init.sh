@@ -11,16 +11,16 @@ until mariadb-admin ping --silent; do
 done
 
 # Create Wordpress database
-mariadb <<EOF
+mariadb -u root -p "42" <<EOF
 CREATE DATABASE IF NOT EXISTS wp_db_inception;
 EOF
 # Create Wordpress admin user
-mariadb -u root <<EOF
+mariadb -u root -p "42" <<EOF
 CREATE USER IF NOT EXISTS "toto"@"%" IDENTIFIED BY "wp-admin-pass";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "toto"@"%";
 EOF
 # Create Wordpress user
-mariadb -u root <<EOF
+mariadb -u root -p "42" <<EOF
 CREATE USER IF NOT EXISTS "wp_user"@"%" IDENTIFIED BY "wp-pass";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "wp_user"@"%";
 EOF
