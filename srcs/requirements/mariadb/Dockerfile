@@ -16,16 +16,4 @@ EXPOSE 3306
 
 USER mysql
 
-# RUN mariadb <<EOF
-# CREATE DATABASE wp-db-inception;
-# CREATE USER "wp-user"@"42-mariadb" IDENTIFIED BY "wp-pass";
-# GRANT ALL PRIVILEGES ON databasename.* TO "wp-user"@"42-mariadb";
-# FLUSH PRIVILEGES;
-# EXIT
-# EOF
-
-# RUN mariadb <<EOF
-# ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
-# EOF
-
 ENTRYPOINT ["bash", "/mariadb-inception-init.sh"]

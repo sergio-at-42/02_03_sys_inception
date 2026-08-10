@@ -23,6 +23,10 @@ CREATE USER IF NOT EXISTS "wp_user"@"%" IDENTIFIED BY "wp-pass";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "wp_user"@"%";
 EOF
 
+# mariadb <<EOF
+# ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
+# EOF
+
 # Stopping temporary MariaDB
 mariadb-admin -u mysql shutdown
 
