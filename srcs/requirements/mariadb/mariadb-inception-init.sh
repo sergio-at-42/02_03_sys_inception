@@ -11,7 +11,7 @@ until mariadb-admin ping --silent; do
 done
 
 # Create Wordpress database
-mariadb -u root <<EOF
+mariadb <<EOF
 CREATE DATABASE IF NOT EXISTS wp_db_inception;
 EOF
 # Create Wordpress admin user
