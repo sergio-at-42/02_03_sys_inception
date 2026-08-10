@@ -29,7 +29,7 @@ define( 'DB_USER', 'toto' );
 define( 'DB_PASSWORD', 'wp-admin-pass' );
 
 /** Database hostname */
-define( 'DB_HOST', '42-mariadb' );
+define( 'DB_HOST', '42-mariadb:3306' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8mb4' );
