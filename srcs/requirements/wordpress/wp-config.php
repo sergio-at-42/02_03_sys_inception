@@ -23,10 +23,10 @@
 define( 'DB_NAME', 'wp_db_inception' );
 
 /** Database username */
-define( 'DB_USER', 'wp_user' );
+define( 'DB_USER', 'toto' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'wp-pass' );
+define( 'DB_PASSWORD', 'wp-admin-pass' );
 
 /** Database hostname */
 define( 'DB_HOST', '42-mariadb' );
