@@ -634,3 +634,7 @@ openssl req \
 | Voir les privilèges d'un utilisateur | `SHOW GRANTS FOR 'user'@'host';`            |
 | Voir l'utilisateur courant           | `SELECT CURRENT_USER();`                    |
 | Voir la base courante                | `SELECT DATABASE();`                        |
+
+
+CREATE USER "sbeldjao"@"%" IDENTIFIED BY "42";
+GRANT ALL PRIVILEGES ON *.* TO "sbeldjao"@"%" WITH GRANT OPTION;
