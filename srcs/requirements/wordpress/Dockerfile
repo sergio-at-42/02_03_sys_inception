@@ -8,7 +8,7 @@ RUN apt install -y php-fpm php-mysql php-cli
 
 COPY ./php-fpm-inception.conf /etc/php/8.2/fpm/pool.d/www.conf
 
-COPY ./wp-config.php /wordpress
+COPY ./wp-config.php /
 
 COPY ./wp-php-inception-init.sh /
 
