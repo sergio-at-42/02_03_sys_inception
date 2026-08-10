@@ -4,7 +4,7 @@ echo ">>>>>>>>     Start of Initialisation Wordpress Database script    <<<<<<<<
 
 # Start MariaDB temporarily
 mariadbd -u mysql &
-echo "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+
 #Wait 5 secondes for MariaDB starting
 until mariadb-admin ping --silent; do
     sleep 1
@@ -29,4 +29,4 @@ echo ">>>>>>>>    End of script    <<<<<<<<"
 
 echo ">>>>>>>>    Start of MariaDB Server    <<<<<<<<"
 
-exec mariadbd -u mysql
+#exec mariadbd -u mysql
