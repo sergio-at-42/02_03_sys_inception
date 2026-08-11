@@ -14,6 +14,6 @@ COPY ./mariadb-inception-init.sh /
 
 EXPOSE 3306
 
-# USER mysql
+USER mysql
 
 ENTRYPOINT ["bash", "/mariadb-inception-init.sh"]
