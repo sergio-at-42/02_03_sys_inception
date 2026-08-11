@@ -23,6 +23,13 @@ CREATE USER IF NOT EXISTS "wp_user"@"%" IDENTIFIED BY "wp-pass";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "wp_user"@"%";
 EOF
 
+# Remove_test_database
+mariadb -u mysql <<EOF
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db="test" OR Db="test\\_%";
+FLUSH PRIVILEGES;
+EOF
+
 # mariadb <<EOF
 # ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
 # EOF
