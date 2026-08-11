@@ -52,6 +52,7 @@ services:
       - db_password
       - db_root_password
     restart: always
+    # A supprimer
     ports:
       - 3306:3306
 
