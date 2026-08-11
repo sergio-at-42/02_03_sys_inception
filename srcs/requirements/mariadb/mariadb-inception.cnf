@@ -1,6 +1,6 @@
-[client-server]
-datadir = /data
+[server]
+datadir = /data/
 port = 3306
-bind_address = *
+bind_address = localhost, 42-wordpress
 socket  = /run/mysqld/mysqld.sock
 #user = wp-user
