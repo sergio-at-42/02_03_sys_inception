@@ -14,7 +14,7 @@ CREATE DATABASE IF NOT EXISTS wp_db_inception;
 EOF
 # Create Wordpress admin user
 mariadb -u mysql <<EOF
-CREATE USER IF NOT EXISTS "toto"@"%" IDENTIFIED BY "wp-admin-pass";
+CREATE USER IF NOT EXISTS "toto"@"%" IDENTIFIED BY "42";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "toto"@"%";
 EOF
 # Create Wordpress user

@@ -6,6 +6,8 @@ RUN apt install -y curl
 
 RUN apt install -y php-fpm php-mysql php-cli
 
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
 COPY ./php-fpm-inception.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 COPY ./wp-config.php /
