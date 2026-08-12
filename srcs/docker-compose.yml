@@ -36,7 +36,6 @@ services:
   42-mariadb:
     build:
       context: requirements/mariadb
-      no_cache
     image: 42-mariadb
     pull_policy: build
     volumes:
