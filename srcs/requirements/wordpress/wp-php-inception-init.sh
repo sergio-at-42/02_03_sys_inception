@@ -6,6 +6,10 @@ curl -L https://wordpress.org/latest.tar.gz | tar -xz --strip-components=1 -C /d
 # Move Wordpress configuration file
 mv /wp-config.php /data/
 
+# Update privileges for "Wordpress Content"
+chown -R www-data:www-data /data/wp-content
+chmod -R 755 /data/wp-content
+
 # Wordpress site installation
 php wp-cli.phar core install \
     --allow-root \
