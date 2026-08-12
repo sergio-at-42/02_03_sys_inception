@@ -6,7 +6,7 @@
 #    By: Serge <serge.beldjaoui@learner.42.tech>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/08/10 11:56:59 by Serge            ###   ########.fr        #
+#    Updated: 2026/08/12 15:45:13 by Serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,9 @@ DATA_DIR_WP = /home/sbeldjao/data/wp_data
 
 
 all : 
-	mkdir -p $(DATA_DIR_DB)
-	mkdir -p $(DATA_DIR_WP)
-# 	curl -L https://wordpress.org/latest.tar.gz | tar -xz --strip-components=1 -C $(DATA_DIR)/wp_data
+	mkdir --parents $(DATA_DIR_DB)
+	mkdir --parents $(DATA_DIR_WP)
+	chown -R root:root $(DATA_DIR)
 	sudo docker compose -f ./srcs/docker-compose.yml up
 
 clean : 
