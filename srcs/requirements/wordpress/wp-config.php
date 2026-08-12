@@ -106,4 +106,4 @@ require_once ABSPATH . 'wp-settings.php';
 /* You can move the wp-content directory, which holds your themes, plugins, and uploads, outside of the WordPress application directory. */
 /* Set WP_CONTENT_DIR to the full local path of this directory (no trailing slash), e.g. */
 
-define( 'WP_CONTENT_DIR', '/data/wp-content' );
+/* define( 'WP_CONTENT_DIR', '/data/wp-content' ); */

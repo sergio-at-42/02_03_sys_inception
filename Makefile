@@ -6,7 +6,7 @@
 #    By: Serge <serge.beldjaoui@learner.42.tech>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/08/12 15:50:17 by Serge            ###   ########.fr        #
+#    Updated: 2026/08/12 15:55:44 by Serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,7 @@ DATA_DIR_WP = /home/sbeldjao/data/wp_data
 all : 
 	mkdir --parents $(DATA_DIR_DB)
 	mkdir --parents $(DATA_DIR_WP)
-	sudo chown -R root:root $(DATA_DIR)
-	sudo docker compose -f ./srcs/docker-compose.yml up
+	docker compose -f ./srcs/docker-compose.yml up
 
 clean : 
 	sudo docker ps -qa | xargs --no-run-if-empty sudo docker stop
