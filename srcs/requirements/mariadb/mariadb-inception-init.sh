@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # MariaDB password
-DB_ROOT_PASSWORD="$(cat /run/secrets/db_root_password)"
-DB_WP_PASSWORD="$(cat /run/secrets/db_wp_password)"
+DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
+DB_WP_PASSWORD=$(cat /run/secrets/db_wp_password)
 echo 1111111111111111111111111111111111111111
 # Starting MariaDB temporarily
 mariadbd -u mysql &
