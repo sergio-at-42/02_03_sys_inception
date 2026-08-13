@@ -6,7 +6,7 @@
 #    By: Serge <serge.beldjaoui@learner.42.tech>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/08/13 18:36:32 by Serge            ###   ########.fr        #
+#    Updated: 2026/08/13 19:50:42 by Serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,9 @@ clean :
 
 clean-data:
 	sudo rm -rf $(DATA_DIR)
+
+clean-cache:
+	sudo docker builder prune -af
 
 fclean : clean-data clean
 
