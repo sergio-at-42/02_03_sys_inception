@@ -14,7 +14,7 @@ WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password.txt)"
 curl -L https://wordpress.org/latest.tar.gz | tar -xz --strip-components=1 -C /data
 
 # Move Wordpress configuration file
-mv /wp-config.php /data/
+# mv /wp-config.php /data/
 
 php wp-cli.phar config create \
     --dbhost="$DB_WP_HOST" \
