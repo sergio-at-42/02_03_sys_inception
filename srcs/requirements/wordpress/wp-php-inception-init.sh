@@ -4,11 +4,11 @@
 # DB_WP_HOST
 # DP_WP_NAME
 # DB_WP_USER
-DB_WP_PASSWORD="$(cat /run/secrets/db_wp_password.txt)"
+DB_WP_PASSWORD="$(cat /run/secrets/db_wp_password)"
 
 # Wordpress admin/password
 # WP_ADMIN
-WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password.txt)"
+WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
 
 # Download and unzip Wordpress
 curl -L https://wordpress.org/latest.tar.gz | tar -xz --strip-components=1 -C /data
