@@ -6,15 +6,13 @@
 #    By: Serge <serge.beldjaoui@learner.42.tech>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/08/12 16:02:55 by Serge            ###   ########.fr        #
+#    Updated: 2026/08/13 18:36:32 by Serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 DATA_DIR = /home/sbeldjao/data
 DATA_DIR_DB = /home/sbeldjao/data/db_data
 DATA_DIR_WP = /home/sbeldjao/data/wp_data
-
-
 
 all : 
 	mkdir --parents $(DATA_DIR_DB)
