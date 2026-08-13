@@ -3,16 +3,14 @@
 # MariaDB password
 DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
 DB_WP_PASSWORD=$(cat /run/secrets/db_wp_password)
-echo 1111111111111111111111111111111111111111
+
 # Starting MariaDB temporarily
 mariadbd -u mysql &
-echo 222222222222222222222222222222222222222222
 
 #Wait 5 secondes for MariaDB starting
 until mariadb-admin ping --silent; do
     sleep 1
 done
-echo 333333333333333333333333333333333333333333
 
 # Create Wordpress database
 mariadb -u mysql <<EOF

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo 10101010101010101010101010
-sleep 10
 # MariaDB for Wordpress
 # DB_WP_HOST
 # DP_WP_NAME
