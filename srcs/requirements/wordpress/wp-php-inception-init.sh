@@ -24,4 +24,11 @@ php wp-cli.phar option update blog_public 0 \
 chown -R www-data:www-data /data/wp-content
 chmod -R 755 /data/wp-content
 
+# Install Wordpress theme
+mv /shapely.1.2.21.zip /data/wp-content/themes/
+php wp-cli.phar theme install shapely \
+    --activate \
+    --allow-root \
+    --path="/data"
+
 exec php-fpm8.2 -F

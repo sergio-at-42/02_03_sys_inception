@@ -12,6 +12,8 @@ COPY ./php-fpm-inception.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 COPY ./wp-config.php /
 
+COPY ./wordpress/shapely.1.2.21.zip /
+
 COPY ./wp-php-inception-init.sh /
 
 EXPOSE 9000
