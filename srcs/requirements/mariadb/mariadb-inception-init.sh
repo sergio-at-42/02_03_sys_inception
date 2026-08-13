@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# MariaDB password
+MYSQL_ROOT_PASSWORD="$(cat /run/secrets/db_root_password.txt)"
+MYSQL_WP_PASSWORD="$(cat /run/secrets/db_wp_password.txt)"
+
 # Starting MariaDB temporarily
 mariadbd -u mysql &
 
@@ -14,12 +18,12 @@ CREATE DATABASE IF NOT EXISTS wp_db_inception;
 EOF
 # Create Wordpress admin user
 mariadb -u mysql <<EOF
-CREATE USER IF NOT EXISTS "toto"@"%" IDENTIFIED BY "42";
+CREATE USER IF NOT EXISTS "toto"@"%" IDENTIFIED BY "$MYSQL_ROOT_PASSWORD";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "toto"@"%";
 EOF
 # Create Wordpress user
 mariadb -u mysql <<EOF
-CREATE USER IF NOT EXISTS "wp_user"@"%" IDENTIFIED BY "wp-pass";
+CREATE USER IF NOT EXISTS "wp_user"@"%" IDENTIFIED BY "$MYSQL_WP_PASSWORD";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "wp_user"@"%";
 EOF
 
