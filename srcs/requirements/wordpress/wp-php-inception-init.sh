@@ -1,20 +1,38 @@
 #!/bin/bash
 
+# MariaDB for Wordpress
+# DB_WP_HOST
+# DP_WP_NAME
+# DB_WP_USER
+DB_WP_PASSWORD="$(cat /run/secrets/db_wp_password.txt)"
+
+# Wordpress admin/password
+# WP_ADMIN
+WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password.txt)"
+
 # Download and unzip Wordpress
 curl -L https://wordpress.org/latest.tar.gz | tar -xz --strip-components=1 -C /data
 
 # Move Wordpress configuration file
 mv /wp-config.php /data/
 
+php wp-cli.phar config create \
+    --dbhost="$DB_WP_HOST" \
+    --dbname="$DP_WP_NAME" \
+    --dbuser="$DB_WP_USER" \
+    --dbpass="$DB_WP_PASSWORD" \
+    --allow-root \
+    --path="/data"
+
 # Wordpress site installation
 php wp-cli.phar core install \
-    --allow-root \
-    --path="/data" \
     --url="https://sbeldjao.42.fr" \
     --title="Benny Hill Show" \
-    --admin_user="toto" \
-    --admin_password="42" \
-    --admin_email="serge.beldjaoui@learner.42.tech"
+    --admin_user="$WP_ADMIN" \
+    --admin_password="$WP_ADMIN_PASSWORD" \
+    --admin_email="serge.beldjaoui@learner.42.tech" \
+    --allow-root \
+    --path="/data"
 
 php wp-cli.phar option update blog_public 0 \
     --allow-root \

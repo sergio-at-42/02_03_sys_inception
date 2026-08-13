@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # MariaDB password
-MYSQL_ROOT_PASSWORD="$(cat /run/secrets/db_root_password.txt)"
-MYSQL_WP_PASSWORD="$(cat /run/secrets/db_wp_password.txt)"
+DB_ROOT_PASSWORD="$(cat /run/secrets/db_root_password.txt)"
+DB_WP_PASSWORD="$(cat /run/secrets/db_wp_password.txt)"
 
 # Starting MariaDB temporarily
 mariadbd -u mysql &
@@ -14,16 +14,22 @@ done
 
 # Create Wordpress database
 mariadb -u mysql <<EOF
-CREATE DATABASE IF NOT EXISTS wp_db_inception;
+CREATE DATABASE IF NOT EXISTS $DP_WP_NAME;
 EOF
-# Create Wordpress admin user
+
 mariadb -u mysql <<EOF
-CREATE USER IF NOT EXISTS "toto"@"%" IDENTIFIED BY "$MYSQL_ROOT_PASSWORD";
-GRANT ALL PRIVILEGES ON wp_db_inception.* TO "toto"@"%";
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD';
 EOF
+
+# # Create Wordpress admin user
+# mariadb -u mysql <<EOF
+# CREATE USER IF NOT EXISTS "toto"@"%" IDENTIFIED BY "$DB_ROOT_PASSWORD";
+# GRANT ALL PRIVILEGES ON wp_db_inception.* TO "toto"@"%";
+# EOF
+
 # Create Wordpress user
 mariadb -u mysql <<EOF
-CREATE USER IF NOT EXISTS "wp_user"@"%" IDENTIFIED BY "$MYSQL_WP_PASSWORD";
+CREATE USER IF NOT EXISTS "$DB_WP_USER"@"%" IDENTIFIED BY "$DB_WP_PASSWORD";
 GRANT ALL PRIVILEGES ON wp_db_inception.* TO "wp_user"@"%";
 EOF
 
@@ -33,10 +39,6 @@ DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db="test" OR Db="test\\_%";
 FLUSH PRIVILEGES;
 EOF
-
-# mariadb <<EOF
-# ALTER USER 'root'@'localhost' IDENTIFIED BY '42';
-# EOF
 
 # Stopping temporary MariaDB
 mariadb-admin -u mysql shutdown
