@@ -78,7 +78,7 @@ volumes:
 secrets:
   wp_user_password:
     file: ../secrets/wp_user_password.txt
-  db_password:
+  db_wp_password:
     file: ../secrets/db_wp_password.txt
   db_root_password:
     file: ../secrets/db_root_password.txt
