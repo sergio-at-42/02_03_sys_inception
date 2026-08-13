@@ -30,7 +30,7 @@ EOF
 # Create Wordpress user
 mariadb -u mysql <<EOF
 CREATE USER IF NOT EXISTS "$DB_WP_USER"@"%" IDENTIFIED BY "$DB_WP_PASSWORD";
-GRANT ALL PRIVILEGES ON wp_db_inception.* TO "wp_user"@"%";
+GRANT ALL PRIVILEGES ON wp_db_inception.* TO "$DB_WP_USER"@"%";
 EOF
 
 # Remove_test_database
