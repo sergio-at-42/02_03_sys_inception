@@ -29,12 +29,7 @@ services:
         target: /data
     networks:
       - intra_net
-    # env_file: .env
-    environment:
-      DB_WP_HOST: "42-mariadb:3306"
-      DP_WP_NAME: "wp_db_inception"
-      DB_WP_USER: "wp_user"
-      WP_ADMIN: "toto"
+    env_file: .env
     secrets:
       - wp_admin_password
       - db_wp_password
@@ -53,11 +48,7 @@ services:
         target: /var/lib/mysql/
     networks:
       - intra_net
-    environment:
-      DB_WP_HOST: "42-mariadb:3306"
-      DP_WP_NAME: "wp_db_inception"
-      DB_WP_USER: "wp_user"
-      WP_ADMIN: "toto"
+    env_file: .env
     secrets:
       - db_wp_password
       - db_root_password
