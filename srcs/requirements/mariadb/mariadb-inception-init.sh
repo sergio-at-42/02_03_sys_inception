@@ -21,12 +21,6 @@ mariadb -u mysql <<EOF
 ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD';
 EOF
 
-# # Create Wordpress admin user
-# mariadb -u mysql <<EOF
-# CREATE USER IF NOT EXISTS "toto"@"%" IDENTIFIED BY "$DB_ROOT_PASSWORD";
-# GRANT ALL PRIVILEGES ON wp_db_inception.* TO "toto"@"%";
-# EOF
-
 # Create Wordpress user
 mariadb -u mysql <<EOF
 CREATE USER IF NOT EXISTS "$DB_WP_USER"@"%" IDENTIFIED BY "$DB_WP_PASSWORD";

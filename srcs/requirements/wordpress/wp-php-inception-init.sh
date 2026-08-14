@@ -16,21 +16,21 @@ curl -L https://wordpress.org/latest.tar.gz | tar -xz --strip-components=1 -C /d
 # Move Wordpress configuration file
 # mv /wp-config.php /data/
 
-php wp-cli.phar config create \
-    --dbhost="42-mariadb:3306" \
-    --dbname="wp_db_inception" \
-    --dbuser="wp_user" \
-    --dbpass="$DB_WP_PASSWORD" \
-    --allow-root \
-    --path="/data"
-
 # php wp-cli.phar config create \
-#     --dbhost="$DB_WP_HOST" \
-#     --dbname="$DP_WP_NAME" \
-#     --dbuser="$DB_WP_USER" \
+#     --dbhost="42-mariadb:3306" \
+#     --dbname="wp_db_inception" \
+#     --dbuser="wp_user" \
 #     --dbpass="$DB_WP_PASSWORD" \
 #     --allow-root \
 #     --path="/data"
+
+php wp-cli.phar config create \
+    --dbhost="$DB_WP_HOST" \
+    --dbname="$DP_WP_NAME" \
+    --dbuser="$DB_WP_USER" \
+    --dbpass="$DB_WP_PASSWORD" \
+    --allow-root \
+    --path="/data"
 
 # Wordpress site installation
 php wp-cli.phar core install \
