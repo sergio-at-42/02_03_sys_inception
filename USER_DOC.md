@@ -17,12 +17,17 @@ Each service runs in its own Docker container, communicating through a dedicated
 ## Access the website and the administration panel
 ### Access the website
 From the computer or the VM with the containers :  
+https://sbeldjao.42.fr:443  
+or  
 https://localhost:443  
 
 Outside the computer or the VM with the containers with a NAT 8443=>443 :  
 https://localhost:8443  
 
 ### Access the administration panel
+From the computer or the VM with the containers :  
+https://sbeldjao.42.fr:443/wp-admin/  
+or  
 https://localhost:443/wp-admin/  
 
 ## Locate and manage credentials
@@ -34,4 +39,4 @@ All this 3 passwords must be provid in 3 text files in the */secrets* directory 
 - Wordpress administrator password ==> db_wp_password.txt  
 
 ## Check that the services are running correctly
-
+In a terminal, enter the command **sudo docker ps** , if everything running normaly, you should see 3 containers up (Nginx, Wordpress, MariaDB).  

@@ -1,10 +1,36 @@
 # Developer documentation
 
 This file must describe how a developer can:
-◦ Set up the environment from scratch (prerequisites, configuration files, secrets).
-◦ Build and launch the activity using the Makefile and Docker Compose.
-◦ Use relevant commands to manage the containers and volumes.
-◦ Identify where the activity data is stored and how it persists.
+## Set up the environment from scratch (prerequisites, configuration files, secrets).
+### Setup environment variables
+```
+# MariaDB
+DB_WP_HOST = MariaDB server url or host address for Wordpress
+DP_WP_NAME = Database name for Wordpress
+DB_WP_USER = MariaDB user for Wordpress
+
+# Wordpress
+WP_ADMIN = Admin Wordpress
+```
+
+### Passwords
+3 passwords are needed for this application : 
+
+All this 3 passwords must be provid in 3 text files in the */secrets* directory :  
+- MariaDB root password ==> db_root_password.txt  
+- MariaDB Wordpress user password ==> db_wp_password.txt  
+- Wordpress administrator password ==> db_wp_password.txt  
+
+## Build and launch the activity using the Makefile and Docker Compose.
+- **make** : Create differents images and start the corresponding containers  
+- **make clean** : Stop and delete all the docker containers and images  
+- **make clean-data** : Delete all data  
+- **make fclean** : *make clean* + *clean-data*  
+- **make clean-cache** : Delete the docker's cache  
+- **make re** : *make fclean* + *make*  
+
+## Use relevant commands to manage the containers and volumes.
+## Identify where the activity data is stored and how it persists.
 
 
 ## Docker MariaDB

@@ -3,263 +3,284 @@
 ---
 
 # Inception
-### One container is not enought. We need to go deeper...
+
+## Description
+
+**Inception** is a system administration project from focused on containerization and infrastructure management with Docker.
+
+The goal is to build a small WordPress website using a complete multi-container architecture, where each service runs in its own Docker container. The project consists of three main services: **Nginx**, **WordPress with PHP-FPM**, and **MariaDB**.
+
+Nginx acts as the web server and reverse proxy, handling HTTPS connections and forwarding PHP requests to the WordPress container. WordPress provides the content management system and uses MariaDB as its relational database.
+
+The project aims to develop a practical understanding of Docker, container networking, persistent volumes, service configuration, TLS, and the interaction between different components of a web infrastructure.
+
+### Architecture
+
+```text
+                         HTTPS
+                           │
+                           ▼
+                    ┌─────────────┐
+                    │    Nginx    │
+                    │   :443      │
+                    └──────┬──────┘
+                           │
+                           │ FastCGI
+                           ▼
+                    ┌─────────────┐
+                    │  WordPress  │
+                    │  PHP-FPM    │
+                    └──────┬──────┘
+                           │
+                           │ MariaDB protocol
+                           ▼
+                    ┌─────────────┐
+                    │   MariaDB   │
+                    │   :3306     │
+                    └─────────────┘
+
+             Persistent Docker volumes
+                 │              │
+                 ▼              ▼
+            WordPress         MariaDB
+              data             data
+```
+
+All services are connected through a dedicated Docker network, while persistent data is stored in Docker volumes so that containers can be recreated without losing the website or database data.
 
 ---
 
-## Description  
-Broaden your system administration skills by working with Docker. In this project, you'll set up a complete infrastructure using Docker Compose, creating and managing multiple containerized services including NGINX with SSL/TLS, WordPress with php-fpm, and MariaDB. You'll gain hands-on experience with containerization, networking, volume management, and secure web service deployment within your own personal virtual machine.  
+## Technical Choices
 
-## Instructions  
-In VirtualBox, launch the appropriate virtual machine.  
-Connect to the virtual machine via SSH on port 4242.  
+### Virtual Machines vs Docker
 
-## Resources  
-Youtube : 
+Virtual Machines (VMs) emulate a complete computer system, including a guest operating system and its own kernel. Docker containers, on the other hand, share the host's kernel and isolate applications and their dependencies at the process level.
 
-IA : chatGPT  
+| Virtual Machines                      | Docker Containers                 |
+| ------------------------------------- | --------------------------------- |
+| Include a complete guest OS           | Share the host kernel             |
+| Higher resource consumption           | Lightweight and fast              |
+| Strong hardware and OS isolation      | Process-level isolation           |
+| Slower startup time                   | Very fast startup                 |
+| Suitable for complete OS environments | Well suited for isolated services |
 
-## Project description  
-*Technical choices :*
-* **Debian vs Rocky Linux** : I already work with **Debian**, and it's a choice 100% open source, and a very stable OS.
-* **AppArmor vs SELinux** : **AppArmor** seems more easy to implement.
-* **UFW vs firewalld** : In my experience, **UFW** is very standard in the Debian's world (Debian, Ubuntu, Linux Mint, etc...).
-* **VirtualBox vs UTM** : **VirtualBox** is installed on the 42's workstation :-)
+For this project, **Docker was chosen** because Inception focuses on deploying individual services in isolated containers. Nginx, WordPress/PHP-FPM, and MariaDB can each have their own environment while communicating through a Docker network. This makes the architecture lightweight, reproducible, and easier to manage than using a separate virtual machine for each service.
 
----   
+### Secrets vs Environment Variables
 
-## Commands used in this project
+Environment variables are commonly used to provide configuration values to containers. However, they are not designed to securely store sensitive information such as passwords or private keys.
 
-### APT
-apt update  
-apt upgrade  
-apt full-upgrade -y  
-apt install  
+Docker Secrets provide a mechanism specifically designed for handling sensitive data. Secrets can be mounted into a container as files and are not directly exposed as regular environment variables.
 
-nano /etc/apt/sources.list.d/debian.sources  
+| Environment Variables                                 | Docker Secrets                                      |
+| ----------------------------------------------------- | --------------------------------------------------- |
+| Simple to configure                                   | Designed for sensitive information                  |
+| Convenient for general configuration                  | Better suited for passwords and credentials         |
+| Values can be visible through container configuration | Mounted as files inside containers                  |
+| Widely supported by applications                      | Requires application support for file-based secrets |
+
+For Inception, **environment variables are used for general configuration**, while sensitive credentials can be handled separately when required by the project. This distinction avoids unnecessarily exposing passwords as regular configuration parameters.
+
+### Docker Network vs Host Network
+
+Docker provides isolated network namespaces for containers. A custom Docker network allows containers to communicate with each other using container names while keeping their network environment isolated from the host.
+
+With `host` networking, a container directly uses the host's network stack and does not have its own isolated network namespace.
+
+| Docker Network                                    | Host Network                                   |
+| ------------------------------------------------- | ---------------------------------------------- |
+| Provides network isolation                        | Shares the host network stack                  |
+| Containers communicate through the Docker network | Containers use host interfaces directly        |
+| Container names can be used for service discovery | No Docker network isolation                    |
+| Better suited to multi-container architectures    | Useful when direct host networking is required |
+
+For Inception, a **dedicated Docker network** is used so that Nginx, WordPress, and MariaDB can communicate internally without exposing every service to the host.
+
+Only the required entry point, **Nginx over HTTPS**, needs to be accessible from outside the Docker network. MariaDB and PHP-FPM therefore remain internal services.
+
+### Docker Volumes vs Bind Mounts
+
+Both Docker volumes and bind mounts allow data to persist beyond the lifetime of a container.
+
+A bind mount maps a specific directory or file from the host filesystem into a container. A Docker volume is managed by Docker and is stored in Docker's own data directory.
+
+| Docker Volumes                              | Bind Mounts                                    |
+| ------------------------------------------- | ---------------------------------------------- |
+| Managed by Docker                           | Managed directly by the host                   |
+| Docker chooses the storage location         | Host path must be specified                    |
+| Easier to manage and migrate                | Gives direct access to host files              |
+| Well suited for persistent application data | Useful for development and configuration files |
+| Less dependent on host filesystem layout    | Tightly coupled to host directory structure    |
+
+For Inception, **Docker volumes are preferred for persistent WordPress and MariaDB data**. This keeps application data independent from the container lifecycle while allowing Docker to manage the underlying storage.
+
+Bind mounts can still be useful when direct access to configuration files from the host is required, but they introduce a stronger dependency on the host's filesystem structure.
+
+---
+
+## Instructions
+
+### Requirements
+
+The project requires:
+
+* Docker
+* Docker Compose
+* Git
+* A Linux environment capable of running Docker
+
+### Configuration
+
+Clone the repository:
 
 ```bash
-Types: deb deb-src
-URIs: https://deb.debian.org/debian
-Suites: trixie trixie-updates
-## If you want access to contrib and non-free components,
-## add " contrib non-free" after "non-free-firmware"
-Components: main non-free-firmware
-Enabled: yes
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
-
-Types: deb deb-src
-URIs: https://security.debian.org/debian-security
-Suites: trixie-security
-Components: main non-free-firmware
-Enabled: yes
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+git clone <repository-url>
+cd inception
 ```
 
-### Open SSH
-apt install ssh  
-sshd_config *fichier de configuration par défaut*  
-cp /etc/ssh/sshd_config /etc/ssh/sshd_config.d/sshd_config_vm42.conf    *créer un fichier de configuration personalisée, qui sera chargé automatiquement*  
-nano /etc/ssh/sshd_config.d/sshd_config_vm42.conf  
+Create the environment configuration file if required by the project:
 
 ```bash
-Port 4242
-PermitRootLogin no
-AllowUsers nom_utilisateur1 nom_utilisateur2
-
-PubkeyAuthentication yes
-AuthorizedKeysFile .ssh/authorized_keys
-PasswordAuthentication yes
-ChallengeResponseAuthentication no
-UsePAM yes
+cp srcs/.env.example srcs/.env
 ```
-systemctl restart ssh  
 
-ssh-keygen -t ed25519 -C "@mail"                *générer un couple clé publique/privée*  
-eval "$(ssh-agent -s)"                          *démarrer l'agent SSH en arrière plan*  
-ssh-add ~/.ssh/id_ed25519                       *ajouter une clé SSH à ssh-agent*  
-mkdir -p ~/.ssh                                 *créer le répertoire SSH de l'utilisateur*  
-chmod 700 ~/.ssh                                *donner tous les droits sur le répertoire SSH uniquement à l'utilisateur*  
-cat id_ed25519.pub >> ~/.ssh/authorized_keys    *copier une clé publique dans le fichier* **authorized_keys**  
-chmod 600 ~/.ssh/authorized_keys                *donner les droits RW sur le fichier* **authorized_keys** *uniquement à l'utilisateur*  
+Edit the `.env` file and configure the required credentials and domain name.
 
-### Hostname   
-hostnamectl *ou* hostname               *Afficher le hotsname actuel*  
-hostnamectl set-hostname new_hostname   *Modifier le hostname*  
+For example:
 
-### IP   
-ip address  
+```env
+DOMAIN_NAME=example.com
 
-sudo apt install resolvconf
+MYSQL_DATABASE=wordpress
+MYSQL_USER=wp_user
+MYSQL_PASSWORD=********
+MYSQL_ROOT_PASSWORD=********
 
-sudo ifdown enp0s3  
-sudo ifup enp0s3  
-sudo systemctl restart networking  
-
-nmcli connection show  
-sudo nmcli connection down "Wired connection 1"  
-sudo nmcli connection up "Wired connection 1"  
-
-#### Configuration IP avec IFUPDOWN
-nano /etc/network/interfaces
+WP_ADMIN_USER=admin
+WP_ADMIN_PASSWORD=********
+WP_ADMIN_EMAIL=admin@example.com
 ```
-# The primary network interface
-allow-hotplug enp0s3
-#iface enp0s3 inet dhcp
-iface enp0s3 inet static
-    address 192.168.100.10
-    netmask 255.255.255.0
-    gateway 192.168.100.1
-    dns-nameservers 1.1.1.1 8.8.8.8
 
-# This is an autoconfigured IPv6 interface
-iface enp0s3 inet6 auto
-```
-#### Configuration IP fixe avec Network Manager
-sudo nmcli connection modify "Wired connection 1" \
-    ipv4.method manual \
-    ipv4.addresses 192.168.100.10/24 \
-    ipv4.gateway 192.168.100.1 \
-    ipv4.dns "192.168.100.1 8.8.8.8"
+Passwords and other sensitive credentials should not be committed to the repository.
 
-#### Configuration IP via DHCP
-sudo nmcli connection modify "Wired connection 1" \
-    ipv4.method auto \
-    ipv4.addresses "" \
-    ipv4.gateway "" \
-    ipv4.dns ""
+### Build and start the project
 
-### Reboot / Shutdown
-reboot  
-shutdown --poweroff
+The complete infrastructure can be built and started with:
 
-## Docker
-### Installation
-**Uninstall all conflicting packages (old installation)**
+```bash
+make
 ```
-sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-doc podman-docker containerd runc | cut -f1)
-```
-**Set up Docker's apt repository**
-```
-# Add Docker's official GPG key:
-sudo apt update
-sudo apt install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-# Add the repository to Apt sources:
-sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
-Types: deb
-URIs: https://download.docker.com/linux/debian
-Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
-Components: stable
-Architectures: $(dpkg --print-architecture)
-Signed-By: /etc/apt/keyrings/docker.asc
-EOF
+or, depending on the Makefile configuration:
 
-sudo apt update
+```bash
+docker compose -f srcs/docker-compose.yml up --build
 ```
-**Install the latest version**
+
+The containers can be inspected with:
+
+```bash
+docker compose -f srcs/docker-compose.yml ps
 ```
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+To view the logs:
+
+```bash
+docker compose -f srcs/docker-compose.yml logs
 ```
-**Verify that Docker is running**
+
+### Stop the services
+
+To stop the containers without removing them:
+
+```bash
+make down
 ```
-sudo systemctl status docker
+
+or:
+
+```bash
+docker compose -f srcs/docker-compose.yml down
 ```
-**Test Docker with the hello-world image**
+
+### Clean the project
+
+To stop the containers and remove the associated Docker resources:
+
+```bash
+make clean
 ```
-sudo docker run hello-world
+
+For a complete cleanup including persistent volumes, if supported by the project Makefile:
+
+```bash
+make fclean
 ```
----
-### Commandes docker
-https://docs.docker.com/go/guides/  
-docker [OPTIONS] COMMAND  
+
+**Warning:** removing Docker volumes permanently deletes the stored WordPress and MariaDB data.
+
+### Accessing WordPress
+
+Once the containers are running, the WordPress website can be accessed through the configured domain name using HTTPS:
+
+```text
+https://example.com
+```
+
+If the domain is only configured locally, an entry may need to be added to `/etc/hosts`:
+
+```text
+127.0.0.1 example.com
+```
+
+The exact hostname and network configuration depend on the local environment and the project's configuration.
 
 ---
-#### Common Commands
-**run**         *Create and run a new container from an image*  
-**exec**        *Execute a command in a running container*  
-**ps**          *List containers*  
-**build**       *Build an image from a Dockerfile*  
-**bake**        *Build from a file*  
-**pull**        *Download an image from a registry*  
-**push**        *Upload an image to a registry*  
-**images**      *List images*  
-**login**       *Authenticate to a registry*  
-**logout**      *Log out from a registry*  
-**search**      *Search Docker Hub for images*  
-**version**     *Show the Docker version information*  
-**info**        *Display system-wide information*  
 
----
-#### Management Commands
-**builder**     *Manage builds*  
-**buildx**      *Docker Buildx*  
-**checkpoint**  *Manage checkpoints*  
-**compose**     *Docker Compose*  
-**container**   *Manage containers*  
-**context**     *Manage contexts*  
-**image**       *Manage images*  
-**manifest**    *Manage Docker image manifests and manifest lists*  
-**network**     *Manage networks*  
-**plugin**      *Manage plugins*  
-**system**      *Manage Docker*  
-**volume**      *Manage volumes*  
+## Resources
 
----
-#### Swarm Commands
-**config**      *Manage Swarm configs*  
-**node**        *Manage Swarm nodes*  
-**secret**      *Manage Swarm secrets*  
-**service**     *Manage Swarm services*  
-**stack**       *Manage Swarm stacks*  
-**swarm**       *Manage Swarm*  
+### Official documentation
 
----
-#### Commands
-**attach**      *Attach local standard input, output, and error streams to a running container*  
-**commit**      *Create a new image from a container's changes*  
-**cp**          *Copy files/folders between a container and the local filesystem*  
-**create**      *Create a new container*  
-**diff**        *Inspect changes to files or directories on a container's filesystem*  
-**events**      *Get real time events from the server*  
-**export**      *Export a container's filesystem as a tar archive*  
-**history**     *Show the history of an image*  
-**import**      *Import the contents from a tarball to create a filesystem image*  
-**inspect**     *Return low-level information on Docker objects*  
-**kill**        *Kill one or more running containers*  
-**load**        *Load an image from a tar archive or STDIN*  
-**logs**        *Fetch the logs of a container*  
-**pause**       *Pause all processes within one or more containers*  
-**port**        *List port mappings or a specific mapping for the container*  
-**rename**      *Rename a container*  
-**restart**     *Restart one or more containers*  
-**rm**          *Remove one or more containers*  
-**rmi**         *Remove one or more images*  
-**save**        *Save one or more images to a tar archive (streamed to STDOUT by default)*  
-**start**       *Start one or more stopped containers*  
-**stats**       *Display a live stream of container(s) resource usage statistics*  
-**stop**        *Stop one or more running containers*  
-**tag**         *Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE*  
-**top**         *Display the running processes of a container*  
-**unpause**     *Unpause all processes within one or more containers*  
-**update**      *Update configuration of one or more containers*  
-**wait**        *Block until one or more containers stop, then print their exit codes*  
+* [Docker Documentation](https://docs.docker.com/)
+* [Docker Compose Documentation](https://docs.docker.com/compose/)
+* [Dockerfile Reference](https://docs.docker.com/reference/dockerfile/)
+* [Nginx Documentation](https://nginx.org/en/docs/)
+* [PHP Documentation](https://www.php.net/docs.php)
+* [PHP-FPM Documentation](https://www.php.net/manual/en/install.fpm.php)
+* [WordPress Developer Resources](https://developer.wordpress.org/)
+* [MariaDB Documentation](https://mariadb.com/docs/)
+* [OpenSSL Documentation](https://docs.openssl.org/)
 
----
-#### Global Options
-**--config string**         *Location of client config files (default "/home/sergio/.docker")*  
-**-c, --context string**    *Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with "docker context use")*  
-**-D, --debug**             *Enable debug mode*  
-**-H, --host string**       *Daemon socket to connect to*  
-**-l, --log-level string**  *Set the logging level ("debug", "info", "warn", "error", "fatal") (default "info")*  
-**--tls**                   *Use TLS; implied by --tlsverify*  
-**--tlscacert string**      *Trust certs signed only by this CA (default "/home/sergio/.docker/ca.pem")*  
-**--tlscert string**        *Path to TLS certificate file (default "/home/sergio/.docker/cert.pem")*  
-**--tlskey string**         *Path to TLS key file (default "/home/sergio/.docker/key.pem")*  
-**--tlsverify**             *Use TLS and verify the remote*  
-**-v, --version**           *Print version information and quit*  
+### Main topics studied
 
----
+The project required research and practical work on:
+
+* Docker images and containers
+* Dockerfiles and Docker Compose
+* Container networking
+* Docker volumes and persistent data
+* Nginx configuration
+* HTTPS and TLS certificates
+* FastCGI and PHP-FPM
+* WordPress installation and configuration
+* MariaDB initialization and user management
+* Environment variables and secrets
+* Shell scripting and container entrypoints
+* Service dependencies and startup order
+
+### AI usage
+
+AI tools were used as a technical assistance and learning resource during the project.
+
+They were mainly used to:
+
+* Clarify Docker, Linux, Nginx, PHP-FPM, WordPress, and MariaDB concepts.
+* Explain error messages encountered during installation, configuration, and container execution.
+* Help identify possible causes of networking, permissions, service startup, and dependency issues.
+* Compare different configuration approaches and explain their consequences.
+* Assist with debugging shell scripts and Docker configuration.
+* Provide explanations and examples of Linux and MariaDB commands.
+* Review configuration choices and improve understanding of the project's architecture.
+
+AI was used primarily for **research, troubleshooting, explanations, and guidance**. The final configuration, commands, scripts, and project implementation were reviewed and adapted to the requirements of the Inception subject and the actual project environment.
+
