@@ -6,7 +6,7 @@
 
 ## Description
 
-**Inception** is a system administration project from focused on containerization and infrastructure management with Docker.
+**Inception** is a system administration project focused on containerization and infrastructure management with Docker.
 
 The goal is to build a small WordPress website using a complete multi-container architecture, where each service runs in its own Docker container. The project consists of three main services: **Nginx**, **WordPress with PHP-FPM**, and **MariaDB**.
 
@@ -30,6 +30,7 @@ The project aims to develop a practical understanding of Docker, container netwo
                     ┌─────────────┐
                     │  WordPress  │
                     │  PHP-FPM    │
+                    │  :9000      │
                     └──────┬──────┘
                            │
                            │ MariaDB protocol
@@ -134,7 +135,7 @@ The project requires:
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone <repository-url> inception
 cd inception
 ```
 
@@ -224,13 +225,13 @@ make fclean
 Once the containers are running, the WordPress website can be accessed through the configured domain name using HTTPS:
 
 ```text
-https://example.com
+https://sbeldjao.42.fr
 ```
 
 If the domain is only configured locally, an entry may need to be added to `/etc/hosts`:
 
 ```text
-127.0.0.1 example.com
+127.0.0.1 sbeldjao.42.fr
 ```
 
 The exact hostname and network configuration depend on the local environment and the project's configuration.

@@ -6,7 +6,7 @@
 #    By: Serge <serge.beldjaoui@learner.42.tech>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/08/13 19:50:42 by Serge            ###   ########.fr        #
+#    Updated: 2026/08/17 17:30:12 by Serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ all :
 	mkdir --parents $(DATA_DIR_WP)
 	sudo docker compose -f ./srcs/docker-compose.yml up
 
+down :
+	sudo docker compose -f srcs/docker-compose.yml down
+
 clean : 
 	sudo docker ps -qa | xargs --no-run-if-empty sudo docker stop
 	sudo docker ps -qa | xargs --no-run-if-empty sudo docker rm -f
@@ -26,10 +29,10 @@ clean :
 	sudo docker volume ls -q | xargs --no-run-if-empty sudo docker volume rm
 	sudo docker network ls -q | xargs --no-run-if-empty sudo docker network rm -f
 
-clean-data:
+clean-data :
 	sudo rm -rf $(DATA_DIR)
 
-clean-cache:
+clean-cache :
 	sudo docker builder prune -af
 
 fclean : clean-data clean
