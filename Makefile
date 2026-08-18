@@ -6,7 +6,7 @@
 #    By: Serge <serge.beldjaoui@learner.42.tech>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/08/17 17:30:12 by Serge            ###   ########.fr        #
+#    Updated: 2026/08/18 13:43:33 by Serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,5 +37,5 @@ clean-cache :
 
 fclean : clean-data clean
 
-re : fclean all
+re : clean all
 
