@@ -150,16 +150,13 @@ Edit the `.env` file and configure the required credentials and domain name.
 For example:
 
 ```env
-DOMAIN_NAME=example.com
+# MariaDB
+DB_WP_HOST = MariaDB server url or host address for Wordpress
+DP_WP_NAME = Database name for Wordpress
+DB_WP_USER = MariaDB user for Wordpress
 
-MYSQL_DATABASE=wordpress
-MYSQL_USER=wp_user
-MYSQL_PASSWORD=********
-MYSQL_ROOT_PASSWORD=********
-
-WP_ADMIN_USER=admin
-WP_ADMIN_PASSWORD=********
-WP_ADMIN_EMAIL=admin@example.com
+# Wordpress
+WP_ADMIN = Admin Wordpress
 ```
 
 Passwords and other sensitive credentials should not be committed to the repository.
