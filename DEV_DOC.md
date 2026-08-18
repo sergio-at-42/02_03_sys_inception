@@ -331,19 +331,19 @@ wordpress_data volume
 Docker-managed storage
 ```
 
-Consequently, the following operation normally preserves the database and WordPress data:
+Consequently, the following operation preserves the database and WordPress data:
 
 ```bash
-docker compose -f srcs/docker-compose.yml down
-docker compose -f srcs/docker-compose.yml up -d
+make re
+or
+make clean
+make
 ```
 
 Whereas:
-
 ```bash
-docker compose -f srcs/docker-compose.yml down -v
+make fclean
 ```
-
 also removes the Compose-managed volumes and therefore **destroys the persistent application data**.
 
 ### Locate the physical storage

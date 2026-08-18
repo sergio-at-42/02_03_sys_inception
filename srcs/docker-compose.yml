@@ -4,6 +4,7 @@ services:
 
   42-nginx:
     build: requirements/nginx
+    image: 42-nginx
     pull_policy: build
     volumes:
       - type: volume
