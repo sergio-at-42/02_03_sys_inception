@@ -37,7 +37,7 @@ php wp-cli.phar config create \
 php wp-cli.phar core install \
     --allow-root \
     --path="/data" \
-    --url="https://sbeldjao.42.fr" \
+    --url="https://sbeldjao.42.fr:8443" \
     --title="Benny Hill Show" \
     --admin_user="$WP_ADMIN" \
     --admin_password="$WP_ADMIN_PASSWORD" \
