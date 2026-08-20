@@ -25,22 +25,23 @@ curl -L https://wordpress.org/latest.tar.gz | tar -xz --strip-components=1 -C /d
 #     --path="/data"
 
 php wp-cli.phar config create \
+    --allow-root \
+    --path="/data" \
+    --url="https://sbeldjao.42.fr:8443/" \
     --dbhost="$DB_WP_HOST" \
     --dbname="$DP_WP_NAME" \
     --dbuser="$DB_WP_USER" \
-    --dbpass="$DB_WP_PASSWORD" \
-    --allow-root \
-    --path="/data"
+    --dbpass="$DB_WP_PASSWORD"
 
 # Wordpress site installation
 php wp-cli.phar core install \
+    --allow-root \
+    --path="/data" \
     --url="https://sbeldjao.42.fr" \
     --title="Benny Hill Show" \
     --admin_user="$WP_ADMIN" \
     --admin_password="$WP_ADMIN_PASSWORD" \
-    --admin_email="serge.beldjaoui@learner.42.tech" \
-    --allow-root \
-    --path="/data"
+    --admin_email="serge.beldjaoui@learner.42.tech"
 
 php wp-cli.phar option update blog_public 0 \
     --allow-root \
@@ -53,8 +54,8 @@ chmod -R 755 /data/wp-content
 # Install Wordpress theme
 mv /shapely.1.2.21.zip /data/wp-content/themes/
 php wp-cli.phar theme install shapely \
-    --activate \
     --allow-root \
-    --path="/data"
+    --path="/data" \
+    --activate
 
 exec php-fpm8.2 -F
