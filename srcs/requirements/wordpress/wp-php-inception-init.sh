@@ -27,7 +27,7 @@ curl -L https://wordpress.org/latest.tar.gz | tar -xz --strip-components=1 -C /d
 php wp-cli.phar config create \
     --allow-root \
     --path="/data" \
-    --url="https://sbeldjao.42.fr:8443/" \
+    --url="https://sbeldjao.42.fr:443/" \
     --dbhost="$DB_WP_HOST" \
     --dbname="$DP_WP_NAME" \
     --dbuser="$DB_WP_USER" \
@@ -37,7 +37,7 @@ php wp-cli.phar config create \
 php wp-cli.phar core install \
     --allow-root \
     --path="/data" \
-    --url="https://sbeldjao.42.fr:8443" \
+    --url="https://sbeldjao.42.fr:443" \
     --title="Benny Hill Show" \
     --admin_user="$WP_ADMIN" \
     --admin_password="$WP_ADMIN_PASSWORD" \
