@@ -4,7 +4,7 @@ services:
 
   42-nginx:
     build: requirements/nginx
-    image: 42-nginx
+    image: 42-nginx:42
     pull_policy: build
     volumes:
       - type: volume
@@ -21,7 +21,7 @@ services:
 
   42-wordpress:
     build: requirements/wordpress
-    image: 42-wordpress
+    image: 42-wordpress:42
     pull_policy: build
     volumes:
       - type: volume
@@ -40,7 +40,7 @@ services:
   42-mariadb:
     build:
       context: requirements/mariadb
-    image: 42-mariadb
+    image: 42-mariadb:42
     pull_policy: build
     volumes:
       - type: volume
