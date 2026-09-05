@@ -6,7 +6,7 @@
 #    By: Serge <serge.beldjaoui@learner.42.tech>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/28 23:57:27 by sbeldjao          #+#    #+#              #
-#    Updated: 2026/08/18 13:43:33 by Serge            ###   ########.fr        #
+#    Updated: 2026/09/05 19:25:24 by Serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ clean :
 	sudo docker ps -qa | xargs --no-run-if-empty sudo docker rm -f
 	sudo docker images -qa | xargs --no-run-if-empty sudo docker rmi -f
 	sudo docker volume ls -q | xargs --no-run-if-empty sudo docker volume rm
-	sudo docker network ls -q | xargs --no-run-if-empty sudo docker network rm -f
+	sudo docker network ls -q | xargs --no-run-if-empty sudo docker network rm -f 2>/dev/null || :
 
 clean-data :
 	sudo rm -rf $(DATA_DIR)
