@@ -12,7 +12,7 @@ COPY ./mariadb-inception.cnf /etc/mysql/mariadb.conf.d/mariadb-inception.cnf
 
 COPY ./mariadb-inception-init.sh /
 
-EXPOSE 3306
+EXPOSE 22222
 
 USER mysql
 
